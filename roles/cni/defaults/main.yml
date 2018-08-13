@@ -8,3 +8,7 @@ calico:
   name: calico
   template:
     ds: calico.yml
+canal:
+  name: canal
+  template:
+    ds: canal.yml
