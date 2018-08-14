@@ -12,6 +12,8 @@ cat <<EOF > ~/hosts
 192.16.35.10 k8s-n1
 192.16.35.11 k8s-n2
 192.16.35.12 k8s-m1
+192.16.35.13 k8s-m2
+192.16.35.14 k8s-m3
 
 EOF
 }
@@ -20,7 +22,7 @@ set -e
 HOST_NAME=$(hostname)
 OS_NAME=$(awk -F= '/^NAME/{print $2}' /etc/os-release | grep -o "\w*"| head -n 1)
 
-if [ ${HOST_NAME} == "k8s-m1" ]; then
+if [ ${HOST_NAME} == "k8s-m3" ]; then
   case "${OS_NAME}" in
     "CentOS")
       sudo yum install -y epel-release
@@ -36,7 +38,7 @@ if [ ${HOST_NAME} == "k8s-m1" ]; then
   esac
 
   yes "/root/.ssh/id_rsa" | sudo ssh-keygen -t rsa -N ""
-  HOSTS="192.16.35.10 192.16.35.11 192.16.35.12"
+  HOSTS="192.16.35.10 192.16.35.11 192.16.35.12 192.16.35.13 192.16.35.14"
   for host in ${HOSTS}; do
     sudo sshpass -p "vagrant" ssh -o StrictHostKeyChecking=no vagrant@${host} "sudo mkdir -p /root/.ssh"
     sudo cat /root/.ssh/id_rsa.pub | \

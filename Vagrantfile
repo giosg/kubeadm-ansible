@@ -17,7 +17,7 @@ end
 
 Vagrant.configure("2") do |config|
   config.vm.provider "virtualbox"
-  master = 1
+  master = 3
   node = 2
 
   private_count = 10
