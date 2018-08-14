@@ -1,0 +1,21 @@
+apiVersion: kubeadm.k8s.io/v1alpha1
+kind: MasterConfiguration
+kubernetesVersion: v1.6.4
+api:
+  advertiseAddress: {{ ansible_host }}
+networking:
+  serviceSubnet: {{ service_cidr }}
+  podSubnet: {{ pod_network_cidr }}
+kubernetesVersion: {{ kube_version }}
+token: {{ token }}
+ha:
+  # this settings is current IP address  
+  ip: {{ ansible_host }}
+  # this settings is keepalived virtual IP address
+  vip: {{ virtual_ip }}
+  # this settings is master nodes' IP address list.
+  # 1. kubeadm init use this info to create apiserver.crt and apiserver.key files. 
+  # 2. And use this settings to create an etcd tls cluster pods. 
+  # 3. And use this settings to create nginx load balancer pods.
+  # 4. And use this settings to create keepalived virtual ip.
+  masters: {{ groups['master'] }}
